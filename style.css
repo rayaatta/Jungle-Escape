@@ -1,0 +1,115 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+:root {
+  /* Central board sizing knobs (sync with JS COLS/ROWS). */
+  --cols: 10;
+  --rows: 12;
+  --board-width: min(92vw, 680px);
+  --gap: clamp(2px, 0.35vmin, 4px);
+  /* Tile size auto-adjusts from viewport and column count. */
+  --tile-size: calc((var(--board-width) - (var(--cols) - 1) * var(--gap)) / var(--cols));
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Trebuchet MS", "Segoe UI", sans-serif;
+  background: linear-gradient(180deg, #f4ffe8 0%, #ddf0ff 100%);
+  padding: 24px 12px;
+}
+
+.game {
+  width: min(96vw, 760px);
+  display: grid;
+  gap: 14px;
+}
+
+h1 {
+  text-align: center;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+.board {
+  /* Responsive grid board driven by CSS variables. */
+  width: var(--board-width);
+  max-width: 100%;
+  display: grid;
+  grid-template-columns: repeat(var(--cols), var(--tile-size));
+  grid-template-rows: repeat(var(--rows), var(--tile-size));
+  gap: var(--gap);
+  margin-inline: auto;
+}
+
+.cell {
+  border-radius: 8px;
+}
+
+.tile {
+  /* Path tiles where the piece can move. */
+  background: #b9ebc9;
+  border: 1px solid #2d7544;
+  display: grid;
+  place-items: center;
+  font-size: clamp(0.7rem, 2.3vmin, 1rem);
+  font-weight: 700;
+  color: #174228;
+}
+
+.empty {
+  /* Inner non-playable area. */
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.piece {
+  /* Player marker scales with tile size using percentages. */
+  width: 58%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ff9d8e 10%, #d62828 70%);
+  border: 2px solid #8a1313;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+
+.move-input,
+button {
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #307748;
+  padding: 0 12px;
+  font-size: 1rem;
+}
+
+.move-input {
+  width: 100px;
+}
+
+button {
+  background: #2d7544;
+  color: #fff;
+  cursor: pointer;
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+.status {
+  margin: 0;
+  text-align: center;
+  font-weight: 600;
+}

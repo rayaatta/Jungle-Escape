@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jungle Escape Game</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="game">
+    <h1>Jungle Escape</h1>
+
+    <section class="board" id="board" aria-label="Game board"></section>
+
+    <form class="controls" id="controls">
+      <label for="moveInput">Move steps</label>
+      <input id="moveInput" class="move-input" type="number" min="1" step="1" placeholder="e.g. 3" required>
+      <button type="submit">Move</button>
+      <button type="button" id="resetBtn">Reset</button>
+    </form>
+
+    <p class="status" id="status">Piece is on tile 1</p>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
