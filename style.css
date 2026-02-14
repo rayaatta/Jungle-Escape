@@ -11,7 +11,9 @@
   --board-width: min(92vw, 680px);
   --gap: clamp(2px, 0.35vmin, 4px);
   /* Tile size auto-adjusts from viewport and column count. */
-  --tile-size: calc((var(--board-width) - (var(--cols) - 1) * var(--gap)) / var(--cols));
+  --tile-size: calc(
+    (var(--board-width) - (var(--cols) - 1) * var(--gap)) / var(--cols)
+  );
 }
 
 body {
@@ -28,6 +30,7 @@ body {
   width: min(96vw, 760px);
   display: grid;
   gap: 14px;
+  position: relative;
 }
 
 h1 {
@@ -83,6 +86,10 @@ h1 {
   justify-content: center;
   align-items: center;
   gap: 8px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .move-input,
