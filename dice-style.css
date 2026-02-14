@@ -1,0 +1,139 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Core component sizing/tokens. */
+  --size: 120px;
+  --dot: 16px;
+  --face-bg: linear-gradient(145deg, #ffffff, #dce3e8);
+  --dot-color: #132235;
+  /* Active (currently rolled) face colors. */
+  --active-face-bg: linear-gradient(145deg, #0f4f8a, #2f89d1);
+  --active-dot-color: #f4fbff;
+}
+
+
+.dice-container {
+  perspective: 700px;
+}
+
+.dice {
+  width: var(--size);
+  height: var(--size);
+  position: relative;
+  transform-style: preserve-3d;
+  transform: rotateX(-24deg) rotateY(35deg);
+  transition: transform 700ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  user-select: none;
+  touch-action: manipulation;
+}
+
+.face {
+  /* These are per-face variables overridden only for the selected face. */
+  --current-face-bg: var(--face-bg);
+  --current-dot-color: var(--dot-color);
+  position: absolute;
+  inset: 0;
+  border-radius: 14px;
+  border: 2px solid #d7dde2;
+  background: var(--current-face-bg);
+  box-shadow: inset 0 2px 6px rgba(255, 255, 255, 0.65),
+    inset 0 -8px 16px rgba(0, 0, 0, 0.1);
+  transition: background 220ms ease, box-shadow 220ms ease;
+}
+
+.dice[data-value="1"] .one,
+.dice[data-value="2"] .two,
+.dice[data-value="3"] .three,
+.dice[data-value="4"] .four,
+.dice[data-value="5"] .five,
+.dice[data-value="6"] .six {
+  /* IMPORTANT: JS sets .dice[data-value]. Keep class names and numbers aligned. */
+  --current-face-bg: var(--active-face-bg);
+  --current-dot-color: var(--active-dot-color);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.45),
+    0 0 26px rgba(76, 170, 255, 0.5), inset 0 2px 6px rgba(255, 255, 255, 0.35),
+    inset 0 -8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Face placement */
+/* IMPORTANT: Do not reorder class names in HTML without updating JS FACE_ROTATION. */
+.one {
+  transform: translateZ(calc(var(--size) / 2));
+}
+
+.six {
+  transform: rotateY(180deg) translateZ(calc(var(--size) / 2));
+}
+
+.two {
+  transform: rotateY(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.five {
+  transform: rotateY(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+.three {
+  transform: rotateX(90deg) translateZ(calc(var(--size) / 2));
+}
+
+.four {
+  transform: rotateX(-90deg) translateZ(calc(var(--size) / 2));
+}
+
+/* Shared pip style */
+/* Pip color comes from --current-dot-color so active face can recolor all pips at once. */
+.face::before {
+  content: "";
+  position: absolute;
+  width: var(--dot);
+  height: var(--dot);
+  border-radius: 50%;
+  background: var(--current-dot-color);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3);
+}
+
+.one::before {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.two::before {
+  top: 24%;
+  left: 24%;
+  box-shadow: 62px 62px 0 var(--current-dot-color);
+}
+
+.three::before {
+  top: 24%;
+  left: 24%;
+  box-shadow: 31px 31px 0 var(--current-dot-color), 62px 62px 0 var(--current-dot-color);
+}
+
+.four::before {
+  top: 24%;
+  left: 24%;
+  box-shadow: 62px 0 0 var(--current-dot-color), 0 62px 0 var(--current-dot-color),
+    62px 62px 0 var(--current-dot-color);
+}
+
+.five::before {
+  top: 24%;
+  left: 24%;
+  box-shadow: 62px 0 0 var(--current-dot-color), 0 62px 0 var(--current-dot-color),
+    62px 62px 0 var(--current-dot-color), 31px 31px 0 var(--current-dot-color);
+}
+
+.six::before {
+  top: 18%;
+  left: 24%;
+  box-shadow: 62px 0 0 var(--current-dot-color), 0 31px 0 var(--current-dot-color),
+    62px 31px 0 var(--current-dot-color), 0 62px 0 var(--current-dot-color),
+    62px 62px 0 var(--current-dot-color);
+}

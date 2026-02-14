@@ -13,7 +13,7 @@
   /* Tile size auto-adjusts from viewport and column count. */
   --tile-size: calc(
     (var(--board-width) - (var(--cols) - 1) * var(--gap)) / var(--cols)
-  );
+  ); 
 }
 
 body {
@@ -80,16 +80,23 @@ h1 {
   border: 2px solid #8a1313;
 }
 
-.controls {
+.dice-container {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
   gap: 8px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+}
+
+.piece-container {
+  width: 120px;
+  min-height: 120px;
+  margin-inline: auto;
+  border: 2px dashed #2d7544;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.7);
 }
 
 .move-input,
