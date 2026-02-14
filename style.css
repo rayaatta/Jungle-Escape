@@ -23,7 +23,6 @@ body {
   place-items: center;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   background: linear-gradient(180deg, #f4ffe8 0%, #ddf0ff 100%);
-  padding: 24px 12px;
 }
 
 .game {
@@ -48,6 +47,7 @@ h1 {
   grid-template-rows: repeat(var(--rows), var(--tile-size));
   gap: var(--gap);
   margin-inline: auto;
+  position: relative;
 }
 
 .cell {
@@ -82,10 +82,14 @@ h1 {
 
 .dice-container {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 8px;
+  gap: 20px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .piece-container {
