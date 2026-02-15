@@ -58,8 +58,11 @@ h1 {
   /* Path tiles where the piece can move. */
   background: #b9ebc9;
   border: 1px solid #2d7544;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  flex-wrap: wrap;
   font-size: clamp(0.7rem, 2.3vmin, 1rem);
   font-weight: 700;
   color: #174228;
@@ -71,13 +74,21 @@ h1 {
   border: 1px solid rgba(0, 0, 0, 0.08);
 }
 
-.piece {
+.piece-one {
   /* Player marker scales with tile size using percentages. */
-  width: 58%;
+  width: 42%;
   aspect-ratio: 1;
   border-radius: 50%;
   background: radial-gradient(circle at 30% 30%, #ff9d8e 10%, #d62828 70%);
   border: 2px solid #8a1313;
+}
+.piece-two {
+  /* Player marker scales with tile size using percentages. */
+  width: 42%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #a8c7ff 10%, #2a4dbf 70%);
+  border: 2px solid #1a3c9f;
 }
 
 .dice-container {
@@ -98,8 +109,10 @@ h1 {
   margin-inline: auto;
   border: 2px dashed #2d7544;
   border-radius: 12px;
-  display: grid;
-  place-items: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.7);
 }
 
