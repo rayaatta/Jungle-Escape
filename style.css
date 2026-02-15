@@ -8,21 +8,28 @@
   /* Central board sizing knobs (sync with JS COLS/ROWS). */
   --cols: 10;
   --rows: 12;
-  --board-width: min(92vw, 680px);
+  /* Reserve vertical room for title/status/start area so full board stays visible. */
+  --ui-space: clamp(170px, 25vh, 240px);
+  --board-width: min(
+    92vw,
+    calc((100svh - var(--ui-space)) * (var(--cols) / var(--rows))),
+    680px
+  );
   --gap: clamp(2px, 0.35vmin, 4px);
   /* Tile size auto-adjusts from viewport and column count. */
   --tile-size: calc(
     (var(--board-width) - (var(--cols) - 1) * var(--gap)) / var(--cols)
-  ); 
+  );
 }
 
 body {
   margin: 0;
-  min-height: 100vh;
+  min-height: 100svh;
   display: grid;
   place-items: center;
   font-family: "Trebuchet MS", "Segoe UI", sans-serif;
   background: linear-gradient(180deg, #f4ffe8 0%, #ddf0ff 100%);
+  padding: 8px;
 }
 
 .game {
@@ -48,6 +55,7 @@ h1 {
   gap: var(--gap);
   margin-inline: auto;
   position: relative;
+  background-image: url(images/jungle.jpg);
 }
 
 .cell {
@@ -67,6 +75,43 @@ h1 {
   font-weight: 700;
   color: #174228;
 }
+.snake {
+  background-image: url(images/snake.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ff9d8e;
+}
+.monkey {
+  background-image: url(images/monkey.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ff9d8e;
+}
+.tiger {
+  background-image: url(images/tiger.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #ff9d8e;
+}
+.treasure {
+  background-image: url(images/chest.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #8fb8ff;
+}
+
+.temple {
+  background-image: url(images/temple.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: 	#ffee8f;
+  box-shadow:  0 0 5px 6px #ffde70;
+}
 
 .empty {
   /* Inner non-playable area. */
@@ -82,6 +127,7 @@ h1 {
   background: radial-gradient(circle at 30% 30%, #ff9d8e 10%, #d62828 70%);
   border: 2px solid #8a1313;
 }
+
 .piece-two {
   /* Player marker scales with tile size using percentages. */
   width: 42%;
@@ -104,8 +150,8 @@ h1 {
 }
 
 .piece-container {
-  width: 120px;
-  min-height: 120px;
+  width: clamp(88px, 16vmin, 120px);
+  min-height: clamp(88px, 16vmin, 120px);
   margin-inline: auto;
   border: 2px dashed #2d7544;
   border-radius: 12px;
@@ -116,20 +162,12 @@ h1 {
   background: rgba(255, 255, 255, 0.7);
 }
 
-.move-input,
 button {
   height: 40px;
   border-radius: 8px;
   border: 1px solid #307748;
   padding: 0 12px;
   font-size: 1rem;
-}
-
-.move-input {
-  width: 100px;
-}
-
-button {
   background: #2d7544;
   color: #fff;
   cursor: pointer;
@@ -140,7 +178,76 @@ button:hover {
 }
 
 .status {
-  margin: 0;
+  margin: auto;
   text-align: center;
   font-weight: 600;
+  max-width: 100%;
+  width: clamp(240px, 60%, 360px);
+  background: #ff9d8e;
+  padding: 3px;
+  border-radius: 6px;
+}
+
+.notification {
+  position: absolute;
+  inset: 0;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: rgba(6, 34, 15, 0.35);
+  z-index: 20;
+}
+
+.notification.is-visible {
+  display: flex;
+}
+
+.notification-card {
+  width: min(90vw, 360px);
+  background: #fff;
+  border: 2px solid #2d7544;
+  border-radius: 12px;
+  padding: 18px 16px 16px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.2);
+}
+
+.notification-card h2 {
+  margin: 0 0 8px;
+}
+
+.notification-message {
+  margin: 0 0 14px;
+  font-weight: 600;
+}
+
+.modal-close {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  padding: 0;
+  border-radius: 50%;
+  line-height: 1;
+  font-size: 1.15rem;
+}
+
+.modal-reset {
+  min-width: 140px;
+}
+
+@media (max-height: 760px) {
+  .game {
+    gap: 10px;
+  }
+
+  .status {
+    font-size: 0.9rem;
+  }
+
+  button {
+    height: 36px;
+  }
 }

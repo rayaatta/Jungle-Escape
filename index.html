@@ -5,30 +5,41 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Jungle Escape Game</title>
   <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="dice-style.css">
+  <link rel="stylesheet" href="dice-style.css">
 </head>
 <body>
   <main class="game">
     <h1>Jungle Escape</h1>
 
-    <section class="board" id="board" aria-label="Game board"></section>
+    <section class="board" id="board" aria-label="Game board">
+      <div class="notification" id="winModal" aria-hidden="true">
+        <div class="notification-card" role="dialog" aria-modal="true" aria-labelledby="winTitle">
+          <button class="modal-close" id="closeWinModal" type="button" aria-label="Close">&times;</button>
+          <h2 id="winTitle">Winner</h2>
+          <p class="notification-message" id="winMessage"></p>
+          <button class="modal-reset" id="modalResetBtn" type="button">Reset Game</button>
+        </div>
+      </div>
+    </section>
 
     <div class="dice-container">
-        <section class="dice">
-          <div class="face one"></div>
-          <div class="face two"></div>
-          <div class="face three"></div>
-          <div class="face four"></div>
-          <div class="face five"></div>
-          <div class="face six"></div>
-        </section>
-        <button class="reset-button">Reset</button>
+      <p class="status" id="status">Piece is in start area. Roll 6 to enter tile 1.</p>
+      <section class="dice">
+        <div class="face one"></div>
+        <div class="face two"></div>
+        <div class="face three"></div>
+        <div class="face four"></div>
+        <div class="face five"></div>
+        <div class="face six"></div>
+      </section>
+      <button class="reset-button">Reset</button>
     </div>
-    <section class="piece-container" aria-label="Starting area"></section>
 
-    <p class="status" id="status">Piece is in start area. Roll 6 to enter tile 1.</p>
+    <section class="piece-container" aria-label="Starting area"></section>
   </main>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="dice-script.js"></script>
+  <script src="win-setup.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
