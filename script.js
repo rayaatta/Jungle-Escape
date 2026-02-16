@@ -36,6 +36,26 @@ const specialTiles = {
   22: { type: "treasure", action: (player) => player.bonusRoll = true }
 }
 
+/*
+  Special-tile audio map (type -> file path).
+  How to extend later:
+  1) Add tile to specialTiles with a unique `type`.
+  2) Add the same `type` here with an audio file path.
+  3) Optional: add matching CSS tile class for visuals.
+*/
+const specialTileAudioFiles = {
+  snake: "audio/snake.mp3",
+  tiger: "audio/tiger.mp3",
+  monkey: "audio/monkey.mp3",
+  treasure: "audio/treasure.mp3",
+  victory: "audio/victory.mp3"
+};
+
+// Pre-create audio objects so playback starts quickly when tile is hit.
+const specialTileAudio = Object.fromEntries(
+  Object.entries(specialTileAudioFiles).map(([type, src]) => [type, new Audio(src)])
+);
+
 // Each player has independent state.
 const users = [
   { name: "Player 1", piece: pieceOne, isInPlay: false, position: 0, skipNextTurn: false, bonusRoll: false },
@@ -127,6 +147,9 @@ function handleDiceRoll(steps) {
   player.position = player.position + steps;
   if (player.position === path.length - 1) {
     placePieces();
+    if(player.name.toLowerCase() !== 'computer'){
+      playSpecialTileAudio('victory');
+    }
     gameOver = true;
     winModal.show(player.name);
     statusText.textContent = `${player.name} wins!`;
@@ -142,6 +165,7 @@ function handleDiceRoll(steps) {
   The message is shown before the effect is applied and there is a delay to allow the player to see the message and the piece sit on the tile before the tile effect is applied */
   const specialTile = specialTiles[player.position];
   if (specialTile) {
+    playSpecialTileAudio(specialTile.type);
     /*preventing clicking the die during .8s delay */
   diceElement.style.pointerEvents = "none";
   statusText.textContent = `${player.name} hit a ${specialTile.type}!`;
@@ -161,6 +185,25 @@ function handleDiceRoll(steps) {
     `${player.name} rolled ${steps} and moved to tile ${player.position + 1}.`,
     rolledSix
   );
+}
+
+/*
+  Plays tile audio by `type` (snake/tiger/monkey/treasure).
+  Safe guards:
+  - If no audio exists for that type, function exits quietly.
+  - If browser blocks autoplay, we catch it so game logic is unaffected.
+*/
+function playSpecialTileAudio(type) {
+  const clip = specialTileAudio[type];
+  if (!clip) {
+    return;
+  }
+
+  clip.currentTime = 0;
+  const playResult = clip.play();
+  if (playResult && typeof playResult.catch === "function") {
+    playResult.catch(() => {});
+  }
 }
 /*the swap player function*/
 function swapWithOpponent(player) {
